@@ -1,0 +1,13 @@
+.card-div[b-wvacq7vrjf] {
+    display: block;
+    width: 60%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 600px) {
+    .card-div[b-wvacq7vrjf] {
+        display: block;
+        width: 97%;
+        margin: 0 auto;
+    }
+}

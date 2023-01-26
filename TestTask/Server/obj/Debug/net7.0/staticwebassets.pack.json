@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\MUSHFIQ\\Desktop\\TestTask_Solution\\TestTask\\Server\\wwwroot\\Images\\bacon.jpg",
+      "PackagePath": "staticwebassets\\Images\\bacon.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MUSHFIQ\\Desktop\\TestTask_Solution\\TestTask\\Server\\wwwroot\\Images\\brit.jpg",
+      "PackagePath": "staticwebassets\\Images\\brit.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MUSHFIQ\\Desktop\\TestTask_Solution\\TestTask\\Server\\wwwroot\\Images\\cheese.jpg",
+      "PackagePath": "staticwebassets\\Images\\cheese.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MUSHFIQ\\Desktop\\TestTask_Solution\\TestTask\\Server\\wwwroot\\Images\\margherita.jpg",
+      "PackagePath": "staticwebassets\\Images\\margherita.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MUSHFIQ\\Desktop\\TestTask_Solution\\TestTask\\Server\\wwwroot\\Images\\meaty.jpg",
+      "PackagePath": "staticwebassets\\Images\\meaty.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MUSHFIQ\\Desktop\\TestTask_Solution\\TestTask\\Server\\wwwroot\\Images\\mushroom.jpg",
+      "PackagePath": "staticwebassets\\Images\\mushroom.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MUSHFIQ\\Desktop\\TestTask_Solution\\TestTask\\Server\\wwwroot\\Images\\pepperoni.jpg",
+      "PackagePath": "staticwebassets\\Images\\pepperoni.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MUSHFIQ\\Desktop\\TestTask_Solution\\TestTask\\Server\\wwwroot\\Images\\salad.jpg",
+      "PackagePath": "staticwebassets\\Images\\salad.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.TestTask.Server.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.TestTask.Server.props",
+      "PackagePath": "build\\TestTask.Server.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.TestTask.Server.props",
+      "PackagePath": "buildMultiTargeting\\TestTask.Server.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.TestTask.Server.props",
+      "PackagePath": "buildTransitive\\TestTask.Server.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

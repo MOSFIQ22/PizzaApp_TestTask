@@ -1,0 +1,13 @@
+.card-main[b-j1wnlb5rjf] {
+    display: block;
+    width: 60%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 600px) {
+    .card-main[b-j1wnlb5rjf] {
+        display: block;
+        width: 97%;
+        margin: 0 auto;
+    }
+}

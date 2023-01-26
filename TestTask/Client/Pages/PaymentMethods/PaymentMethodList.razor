@@ -1,0 +1,108 @@
+﻿@page "/PaymentMethods/List"
+@attribute [Authorize(Roles = "Admin")]
+@inject HttpClient http
+@inject ISnackbar snackBar
+@inject IDialogService dialogService
+@if (paymentMethods is not null)
+{
+    <MudCard Style="width:100%" Class="mt-4">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h5">Payment methods</MudText>
+                <MudText Typo="Typo.body2">List of payments methods</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudFab Size="Size.Medium" Href="/PaymentMethods/Create" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Add" />
+
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent>
+
+            <MudTable Items="@paymentMethods" Hover="true" SortLabel="Sort By">
+                <HeaderContent>
+                    <MudTh><MudTableSortLabel SortBy="new Func<PaymentMethod, object>(x=>x.PaymentMethodName)">Name</MudTableSortLabel></MudTh>
+                    <MudTh>Active</MudTh>
+
+                    <MudTh DataLabel="Action">...</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Order id">@context.PaymentMethodName</MudTd>
+
+                    <MudTd DataLabel="Order date">@(context.Active ? "Yes" : "No")</MudTd>
+
+                        <MudTd DataLabel="Action">
+                            <MudIconButton Href="@GetEditLink(@context)" Icon="@Icons.Material.Filled.Edit"></MudIconButton>
+                            <MudIconButton @onclick="@(()=>ConfirmDelete(@context))" Color="@Color.Error" Icon="@Icons.Material.Filled.Delete"></MudIconButton>
+                        </MudTd>
+                    </RowTemplate>
+                    <PagerContent>
+                        <MudTablePager PageSizeOptions="new int[]{5, 10, 25,50, 100}" />
+                    </PagerContent>
+                </MudTable>
+            </MudCardContent>
+            
+  
+        </MudCard>
+}
+else
+{
+    <div style="text-align:center" class="pt-4">
+        <MudProgressCircular style="text-align:center" Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+    </div>
+}
+@code {
+    private IEnumerable<PaymentMethod>? paymentMethods;
+    protected override async Task OnInitializedAsync()
+    {
+        var data = await http.GetFromJsonAsync<IEnumerable<PaymentMethod>>("api/PaymentMethods");
+        if (data is not null)
+        {
+            this.paymentMethods = data;
+
+        }
+
+    }
+    private string GetEditLink(PaymentMethod paymentMethod)
+    {
+        return $"/PaymentMethods/Edit/{paymentMethod.PaymentMethodId}";
+    }
+    private async Task ConfirmDelete(PaymentMethod p)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Do you really want to delete this record? This action cannot be undone.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true };
+
+        var dialog = await dialogService.ShowAsync<ConfirmDialog>("Confirm", parameters, options);
+        var result = await dialog.Result;
+        if (!result.Canceled)
+        {
+            var response = await this.http.DeleteAsync($"api/PaymentMethods/{p.PaymentMethodId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var deleted = paymentMethods?.ToList()
+                .FirstOrDefault(x => x.PaymentMethodId == p.PaymentMethodId);
+                if (deleted is not null)
+                {
+                    snackBar.Clear();
+                    snackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+                    snackBar.Add("Data deleted successfully", Severity.Success);
+                    //Items?.ToList()
+                    //.Remove(deleted);
+                    this.paymentMethods = this.paymentMethods?
+                    .GroupBy(s => s)
+                    .SelectMany(g => g.Key.Equals(deleted) ? g.Skip(1) : g)
+                    .ToList();
+                }
+            }
+            else
+            {
+                snackBar.Clear();
+                snackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+                snackBar.Add("Failed to delete record.", Severity.Error);
+            }
+        }
+    }
+}

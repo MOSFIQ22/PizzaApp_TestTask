@@ -1,0 +1,82 @@
+﻿@page "/PaymentMethods/Edit/{id:int}"
+@inject HttpClient http
+@inject ISnackbar snackBar
+
+<div class="card-div pt-2">
+    @if (isError)
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">
+            @errorMessage
+        </MudAlert>
+    }
+    @if(model is null)
+    {
+        <div style="text-align:center" class="pt-4">
+            <MudProgressCircular style="text-align:center" Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+        </div>
+    }
+    else
+    {
+    <MudCard Class="mt-4">
+            <MudCardHeader Class="mb-0">
+            <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Edit payment method</MudText>
+                    <MudText Typo="Typo.subtitle1">Modify data</MudText>
+                </CardHeaderContent>
+
+            </MudCardHeader>
+            <MudCardContent Class="mt-0">
+
+
+                <EditForm Model="@model" OnValidSubmit="DoUpdate" >
+                    <DataAnnotationsValidator />
+            <MudTextField Label="Payment method" @bind-Value="model.PaymentMethodName" For="@(() => model.PaymentMethodName)" />
+
+
+                    <MudCheckBox @bind-Checked="model.Active" Label="Active" Class="ms-0 ps-0"></MudCheckBox>
+
+
+
+
+                    <MudButton EndIcon="@Icons.Material.Outlined.SaveAlt" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-3">
+                        Save
+                    </MudButton>
+                </EditForm>
+
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Href="/PaymentMethods/List" Variant="Variant.Text" Color="Color.Primary">Back to list</MudButton>
+            </MudCardActions>
+
+
+        </MudCard>
+    }
+    
+
+</div>
+@code {
+    [Parameter] public int id { get; set; }
+    private PaymentMethod? model;
+    private bool isError { get; set; } = false;
+    private string errorMessage { get; set; } = "";
+    protected override async Task OnInitializedAsync()
+    {
+        this.model = await this.http.GetFromJsonAsync<PaymentMethod>($"api/PaymentMethods/{id}");
+
+    }
+    private async Task DoUpdate()
+    {
+        var response = await this.http.PutAsJsonAsync("api/PaymentMethods", this.model);
+        if (response.IsSuccessStatusCode)
+        {
+            snackBar.Clear();
+            snackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            snackBar.Add("Data updated successfully", Severity.Success);
+        }
+        else
+        {
+            errorMessage = "Failed to update";
+            isError = true;
+        }
+    }
+}

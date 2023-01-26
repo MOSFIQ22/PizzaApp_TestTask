@@ -1,0 +1,69 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = TestTask.Client
+build_property.RootNamespace = TestTask.Client
+build_property.ProjectDir = C:\Users\MUSHFIQ\Desktop\TestTask_Solution\TestTask\Client\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\MUSHFIQ\Desktop\TestTask_Solution\TestTask\Client
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Components/Dialogs/ConfirmDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEaWFsb2dzXENvbmZpcm1EaWFsb2cucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Pages/PaymentMethods/PaymentMethodList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF5bWVudE1ldGhvZHNcUGF5bWVudE1ldGhvZExpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Pages/Payments/PaymentList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF5bWVudHNcUGF5bWVudExpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Shared/LoginRedirect.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvZ2luUmVkaXJlY3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-j1wnlb5rjf
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Pages/Login/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW5cTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-eul98vbct9
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Pages/PaymentMethods/Create.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF5bWVudE1ldGhvZHNcQ3JlYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-i9ow0d9ans
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Pages/PaymentMethods/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF5bWVudE1ldGhvZHNcRWRpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-wvacq7vrjf
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Pages/PizzaApp/PizzaAppHome.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGl6emFBcHBcUGl6emFBcHBIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-unysdx8mu9
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-byn0xblx8p
+
+[C:/Users/MUSHFIQ/Desktop/TestTask_Solution/TestTask/Client/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-70l7ccf5wo

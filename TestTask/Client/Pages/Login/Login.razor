@@ -1,0 +1,89 @@
+﻿@page "/Login"
+
+@inject HttpClient http
+@inject AuthenticationStateProvider authStateProvider
+@inject ISessionStorageService sessionStorage 
+@inject NavigationManager navigationManager
+
+<div class="login-div pt-2">
+    @if (isLoginError)
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">Login failed. Check username & password</MudAlert>
+    }
+    @if (isAlreadyLoggedIn)
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">Insuffient previlidges</MudAlert>
+    }
+    <MudCard Class="mt-4">
+        <MudCardHeader Class="mb-0">
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Login</MudText>
+                <MudText Typo="Typo.subtitle1">Enter username and password</MudText>
+            </CardHeaderContent>
+
+        </MudCardHeader>
+        <MudCardContent Class="mt-0">
+           
+
+            <EditForm Model="@model" OnValidSubmit="DoLogin">
+                <DataAnnotationsValidator />
+                <MudTextField Label="Username" 
+                              @bind-Value="model.Username" For="@(() => model.Username)" />
+                <MudTextField Label="Password"  Class="mt-3"
+                              @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password" />
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-3">Login</MudButton>
+            </EditForm>
+        </MudCardContent>
+      
+           
+       
+    </MudCard>
+    
+</div>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "ReturnUrl")]
+    public string? ReturnUrl { get; set; }
+    private LoginViewModel model = new();
+    private bool isLoginError = false;
+    private bool isAlreadyLoggedIn = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await authStateProvider.GetAuthenticationStateAsync();
+        if ( state.User is not null && state.User.Identity is not null)
+        {
+            if (state.User.Identity.IsAuthenticated)
+            {
+                isAlreadyLoggedIn = true;
+            }
+        }
+    }
+    private async Task DoLogin()
+    {
+        isLoginError = false;
+        isAlreadyLoggedIn = false;
+        Console.WriteLine(model);
+        var response = await http.PostAsJsonAsync("api/Account/Login", model);
+        if (response.IsSuccessStatusCode)
+        {
+            var userSession =await response.Content.ReadFromJsonAsync<UserSession>();
+            if(userSession is not null)
+            {
+                await sessionStorage.SetItemAsStringAsync("token", userSession.Token);
+                await authStateProvider.GetAuthenticationStateAsync();
+                if(ReturnUrl is not null)
+                    navigationManager.NavigateTo(ReturnUrl);
+                else 
+                    navigationManager.NavigateTo("/");
+            }
+        }
+        else
+        {
+            //Snackbar.Add("Reactor meltdown is imminent", Severity.Error);
+            isLoginError = true;
+        }
+    }
+    
+}

@@ -1,0 +1,67 @@
+﻿@page "/Payments/List"
+
+@attribute [Authorize(Roles = "Admin,Simple")]
+@inject HttpClient http
+@if (payments is not null)
+{
+    <MudCard Style="width:100%" Class="mt-4">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h5">Payments</MudText>
+                <MudText Typo="Typo.body2">List of payments</MudText>
+            </CardHeaderContent>
+           @* <CardHeaderActions>
+                <MudFab Size="Size.Medium" Href="/Categories/Create" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Add" />
+
+            </CardHeaderActions>*@
+        </MudCardHeader>
+        <MudCardContent>
+
+            <MudTable Items="@payments" Hover="true" SortLabel="Sort By">
+                <HeaderContent>
+                    <MudTh><MudTableSortLabel SortBy="new Func<PaymentViewModel, object>(x=>x.OrderId)">Order id</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<PaymentViewModel, object>(x=>x.CustomerName)">Customer</MudTableSortLabel></MudTh>
+                    <MudTh DataLabel="Order Date"><MudTableSortLabel SortBy="new Func<PaymentViewModel, object>(x=>x.OrderDate)">Order date</MudTableSortLabel></MudTh>
+                    <MudTh DataLabel="Payment time"><MudTableSortLabel SortBy="new Func<PaymentViewModel, object>(x=>x.PaymentTime)">Payment time</MudTableSortLabel></MudTh>
+                    <MudTh DataLabel="Payment method"><MudTableSortLabel SortBy="new Func<PaymentViewModel, object>(x=>x.PaidThrough)">Payment method</MudTableSortLabel></MudTh>
+                    @*<MudTh DataLabel="Action">...</MudTh>*@
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Order id">@context.OrderId</MudTd>
+                    <MudTd DataLabel="Category name">@context.CustomerName</MudTd>
+                    <MudTd DataLabel="Order date" >@context.OrderDate.ToString("yyyy-MM-dd hh:mm tt")</MudTd>
+                    <MudTd DataLabel="Payment time">@context.PaymentTime.ToString("yyyy-MM-dd hh:mm tt")</MudTd>
+                    <MudTd DataLabel="Payment method">@context.PaidThrough</MudTd>
+                    @*<MudTd DataLabel="Action">
+                        
+                    </MudTd>*@
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[]{5, 10, 25,50, 100}" />
+                </PagerContent>
+            </MudTable>
+        </MudCardContent>
+        @*<MudCardActions>
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+            <MudText>Total record @payments.Count()</MudText>
+        </MudCardActions>*@
+    </MudCard>
+}
+else
+{
+    <div style="text-align:center" class="pt-4">
+        <MudProgressCircular style="text-align:center" Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+    </div>
+}
+
+@code {
+    private IEnumerable<PaymentViewModel>? payments;
+    protected override async Task OnInitializedAsync()
+    {
+        var data = await http.GetFromJsonAsync<IEnumerable<PaymentViewModel>>("api/Payments/VM");
+        if(data is not null)
+        {
+            this.payments = data;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+﻿@inject NavigationManager navigationManager
+<h3>LoginRedirect</h3>
+
+@code {
+    [Parameter]
+    public string ReturnUrl { get; set; } = default!;
+    protected override void OnInitialized()
+    {
+        
+        navigationManager.NavigateTo($"/Login?ReturnUrl={ReturnUrl}");
+    }
+}

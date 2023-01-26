@@ -1,0 +1,78 @@
+﻿@using System.Net.Http.Headers;
+@inherits LayoutComponentBase
+@inject HttpClient http
+@inject AuthenticationStateProvider authStateProvider
+@inject ISessionStorageService sessionStorage
+@inject NavigationManager navigationManager
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout style="padding:0;margin:0;">
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <span>Pizza App</span>
+        <MudSpacer />
+        <MudNavMenu Color="Color.Inherit">
+            <MudNavLink Style="color:white;background-color:transparent" Href="/" Match="NavLinkMatch.Prefix">Home</MudNavLink>
+            
+        </MudNavMenu>
+        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit">
+            <AuthorizeView>
+                <Authorized>
+                    <MudMenuItem Class="px-4" IconSize="Size.Small" IconColor="Color.Secondary" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudMenuItem>
+                    <MudMenuItem @onclick="DoLogout" Class="px-4" IconSize="Size.Small" IconColor="Color.Secondary" Icon="@Icons.Material.Filled.Logout">Logout</MudMenuItem>
+                </Authorized>
+                <NotAuthorized>
+                    <MudMenuItem Class="px-4" IconSize="Size.Small" IconColor="Color.Default" Href="/login" Icon="@Icons.Material.Filled.Login">Login</MudMenuItem>
+                </NotAuthorized>
+            </AuthorizeView>
+
+
+        </MudMenu>
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Temporary">
+       <MudNavMenu Color="Color.Transparent">
+            <MudText Typo="Typo.h6" Class="px-4">Pizza App</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Blazor Client</MudText>
+            <MudDivider Class="mt-2" />
+            <MudNavLink Href="/" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/Payments/List" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Payments">Payments</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/PaymentMethods/List" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Payment">Payment Methods</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/PizzaApp/Home" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPizza">Pizza App UI</MudNavLink>
+            <MudDivider />
+       </MudNavMenu>
+        
+    </MudDrawer>
+    <MudMainContent>
+        <div class="container">
+            @Body
+        </div>
+    </MudMainContent>
+</MudLayout>
+@code {
+    bool _drawerOpen = false;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+    private async Task DoLogout()
+    {
+
+        var response = await http.PostAsync("/api/Account/Logout", null);
+        if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            
+        }
+        if (response.IsSuccessStatusCode)
+        {
+            await sessionStorage.RemoveItemAsync("token");
+            await authStateProvider.GetAuthenticationStateAsync();
+            navigationManager.NavigateTo("/Login");
+        }
+    }
+}

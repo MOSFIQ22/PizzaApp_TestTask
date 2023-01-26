@@ -1,0 +1,73 @@
+﻿@page "/PaymentMethods/Create"
+@inject HttpClient http
+@inject ISnackbar snackBar
+<div class="card-div pt-2">
+    @if (isError)
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">
+            @errorMessage
+        </MudAlert>
+    }
+
+    <MudCard Class="mt-4">
+        <MudCardHeader Class="mb-0">
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Create payment method</MudText>
+                <MudText Typo="Typo.subtitle1">Fill the form</MudText>
+            </CardHeaderContent>
+
+        </MudCardHeader>
+        <MudCardContent Class="mt-0">
+
+
+            <EditForm Model="@model" OnValidSubmit="DoSave" >
+                <DataAnnotationsValidator />
+                <MudTextField Label="Payment method" @bind-Value="model.PaymentMethodName" For="@(() => model.PaymentMethodName)" />
+               
+                
+                <MudCheckBox  @bind-Checked="model.Active" Label="Active" Class="ms-0 ps-0"></MudCheckBox>
+                
+           
+           
+           
+                <MudButton EndIcon="@Icons.Material.Outlined.SaveAlt" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-3">
+                    Save
+                </MudButton> 
+             </EditForm>
+             
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Href="/PaymentMethods/List" Variant="Variant.Text" Color="Color.Primary">Back to list</MudButton>
+        </MudCardActions>
+
+
+    </MudCard>
+
+</div>
+
+
+   
+    
+  
+@code {
+    private PaymentMethod model = new();
+    private bool isError { get; set; } = false;
+    private string errorMessage { get; set; } = "";
+    public async Task DoSave()
+    {
+        isError = false;errorMessage = "";
+        var response = await this.http.PostAsJsonAsync("api/PaymentMethods", this.model);
+        if(response.IsSuccessStatusCode)
+        {
+            model = new();
+            snackBar.Clear();
+            snackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            snackBar.Add("Data saved successfully", Severity.Success);
+        }
+        else
+        {
+            errorMessage = "Failed to save";
+            isError = true;
+        }
+    }
+}

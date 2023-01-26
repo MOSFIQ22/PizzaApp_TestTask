@@ -1,0 +1,19 @@
+.login-div[b-eul98vbct9] {
+    display:block;
+    width:60%;
+    margin:0 auto;
+}
+.show[b-eul98vbct9] {
+    display:block;
+}
+.hide[b-eul98vbct9] {
+    display:none;
+}
+@media screen and (max-width: 600px)
+{
+    .login-div[b-eul98vbct9] {
+        display: block;
+        width: 97%;
+        margin: 0 auto;
+    }
+}
